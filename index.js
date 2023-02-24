@@ -26,5 +26,11 @@ const walls = [
 World.add(world, walls);
 // Make grid
 const grid = Array(3).fill(null).map(() => (Array(3).fill(false)));
+// Make Verticals
+const verticals = Array(3).fill(null).map(() => (Array(2).fill(false)));
+// Make Horizontals
+const horizontals = Array(2).fill(null).map(() => (Array(3).fill(false)));
 // Testing
 console.log(grid);
+console.log(verticals);
+console.log(horizontals);
