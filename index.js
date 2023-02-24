@@ -26,7 +26,12 @@ const walls = [
 // const shape = Bodies.rectangle(200, 200, 50, 50, { isStatic: false });
 // Adding objects to the world create
 for (let i = 0; i < 20; i++) {
-    // World.add(world, shape);
-    World.add(world, Bodies.rectangle(Math.random() * width, Math.random() * height, 50, 50, { isStatic: false }));
+    // Randomizing object shapes with random
+    if (Math.random() > 0.51) {
+        // World.add(world, shape);
+        World.add(world, Bodies.rectangle(Math.random() * width, Math.random() * height, 50, 50, { isStatic: false }));
+    } else {
+        World.add(world, Bodies.circle(Math.random() * width, Math.random() * height, 35, { isStatic: false }));
+    }
 }
 World.add(world, walls);
