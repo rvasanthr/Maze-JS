@@ -8,7 +8,7 @@ const { world } = engine;
 const render = Render.create({
     element: document.body,
     engine: engine,
-    options: { width, height }
+    options: { width, height, wireframes: false },
 });
 Render.run(render);
 Runner.run(Runner.create(), engine);
