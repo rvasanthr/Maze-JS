@@ -24,3 +24,15 @@ const walls = [
 ];
 // Adding objects to the world create
 World.add(world, walls);
+// Make grid
+const grid = [];
+// Looping to generate the 3 x 3 grid
+for (let i = 0; i < 3; i++) {
+    // makes a 1 D array of length 3
+    grid.push([]);
+    for (let j = 0; j < 3; j++) {
+        grid[i].push(false);
+    }
+}
+// Testing
+console.log(grid);
