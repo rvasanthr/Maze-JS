@@ -46,13 +46,34 @@ console.log(startRow, startColumn);
 // Step through cell function, iterates through the cells
 const stepThroughCell = (row, column) => {
     // Go to cell [row, column]
-    // - If the cell was visited, the return
-    // - Mark the cell as visited (true/false)
+    if (grid[row][column]) {
+        // - If the cell was visited, the return
+        return;
+    } else {
+        // - Mark the cell as visited (true/false)
+        grid[row][column] = true;
+    }
     // Assemble randomly ordered list of neighbours
+    //        c - 1   |    c    | c + 1
+    // r-1  ; cell    |  CELL  | cell
+    //   r  ; CELL   |  home  | CELL
+    // r + 1; cell  |  CELL   | cell
+    const neighbours = [
+        // Above
+        grid[row - 1][column],
+        // Left
+        grid[row][column - 1],
+        // Right
+        grid[row][column + 1],
+        // Below
+        grid[row + 1][column]
+    ];
     // For each neighbour...
     // - Check whether that neighbour is out of bounds
+    //   - row or column cannot be less than 0 or greater than row or column.
     // - If neighbour had been visited, continue to next neighbour
     // - Remove the wall (horizontals or verticals, depends on direction of movement)
     // - Visit next cell (invoke stepThroughCell Fn with cell cordinates to visit)
 };
 // Invoke stepThroughCell Fn
+stepThroughCell(startRow, startColumn);
