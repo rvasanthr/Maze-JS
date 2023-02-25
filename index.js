@@ -43,3 +43,16 @@ const startRow = Math.floor(Math.random() * cells);
 const startColumn = Math.floor(Math.random() * cells);
 // Testing
 console.log(startRow, startColumn);
+// Step through cell function, iterates through the cells
+const stepThroughCell = (row, column) => {
+    // Go to cell [row, column]
+    // - If the cell was visited, the return
+    // - Mark the cell as visited (true/false)
+    // Assemble randomly ordered list of neighbours
+    // For each neighbour...
+    // - Check whether that neighbour is out of bounds
+    // - If neighbour had been visited, continue to next neighbour
+    // - Remove the wall (horizontals or verticals, depends on direction of movement)
+    // - Visit next cell (invoke stepThroughCell Fn with cell cordinates to visit)
+};
+// Invoke stepThroughCell Fn
