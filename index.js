@@ -36,3 +36,10 @@ const horizontals = Array(cells - 1).fill(null).map(() => (Array(cells).fill(fal
 console.log(grid);
 console.log(verticals);
 console.log(horizontals);
+// Starting Position
+// Row
+const startRow = Math.floor(Math.random() * cells);
+// Column
+const startColumn = Math.floor(Math.random() * cells);
+// Testing
+console.log(startRow, startColumn);
