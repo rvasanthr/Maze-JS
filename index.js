@@ -87,6 +87,11 @@ const stepThroughCell = (row, column) => {
     ]);
     console.log('Neighbours:', neighbours);
     // For each neighbour...
+    for (let neighbour of neighbours) {
+        // Destructuring
+        const [nextRow, nextColumn] = neighbour;
+        // - Check whether that neighbour is out of bounds
+    }
     // - Check whether that neighbour is out of bounds
     //   - row or column cannot be less than 0 or greater than row or column.
     // - If neighbour had been visited, continue to next neighbour
