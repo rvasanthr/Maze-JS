@@ -95,8 +95,11 @@ const stepThroughCell = (row, column) => {
             //   - row || column should not be < 0 || >= cells. if so skip
             continue;
         }
+        // - If neighbour had been visited, skip onto next neighbour
+        if (grid[row][column]) {
+            continue;
+        }
     }
-    // - If neighbour had been visited, continue to next neighbour
     // - Remove the wall (horizontals or verticals, depends on direction of movement)
     // - Visit next cell (invoke stepThroughCell Fn with cell cordinates to visit)
 };
