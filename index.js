@@ -26,7 +26,25 @@ const walls = [
 ];
 // Adding objects to the world create
 World.add(world, walls);
-// Make grid
+// MAZE GENERATOR
+// shuffler Fn to randomize grid neighbours
+const shuffle = (theArray) => {
+    let length = theArray.length;
+    // - Random number generated will always be between the indices range
+    while (length > 0) {
+        // Generate random index for swapping per iteration
+        const randomIndex = Math.floor(Math.random() * length);
+        // Eventual exit of loop
+        // Prevents array index out of bounds error
+        length--;
+        // Swap
+        const temp = theArray[length];
+        theArray[length] = theArray[randomIndex];
+        theArray[randomIndex] = temp;
+    }
+    return theArray;
+}
+// Grid Maker
 const grid = Array(cells).fill(null).map(() => (Array(cells).fill(false)));
 // Make Verticals
 const verticals = Array(cells).fill(null).map(() => (Array(cells - 1).fill(false)));
@@ -42,32 +60,32 @@ const startRow = Math.floor(Math.random() * cells);
 // Column
 const startColumn = Math.floor(Math.random() * cells);
 // Testing
-console.log(startRow, startColumn);
+// console.log(startRow, startColumn);
 // Step through cell function, iterates through the cells
 const stepThroughCell = (row, column) => {
     // Go to cell [row, column]
     if (grid[row][column]) {
         // - If the cell was visited, the return
         return;
-    } else {
-        // - Mark the cell as visited (true/false)
-        grid[row][column] = true;
     }
+    // - Mark the cell as visited (true/false)
+    grid[row][column] = true;
     // Assemble randomly ordered list of neighbours
     //        c - 1   |    c    | c + 1
     // r-1  ; cell    |  CELL  | cell
     //   r  ; CELL   |  home  | CELL
     // r + 1; cell  |  CELL   | cell
-    const neighbours = [
+    const neighbours = shuffle([
         // Above
-        grid[row - 1][column],
+        [row - 1, column],
         // Left
-        grid[row][column - 1],
+        [row, column - 1],
         // Right
-        grid[row][column + 1],
+        [row, column + 1],
         // Below
-        grid[row + 1][column]
-    ];
+        [row + 1, column]
+    ]);
+    console.log('Neighbours:', neighbours);
     // For each neighbour...
     // - Check whether that neighbour is out of bounds
     //   - row or column cannot be less than 0 or greater than row or column.
@@ -76,4 +94,5 @@ const stepThroughCell = (row, column) => {
     // - Visit next cell (invoke stepThroughCell Fn with cell cordinates to visit)
 };
 // Invoke stepThroughCell Fn
-stepThroughCell(startRow, startColumn);
+// stepThroughCell(startRow, startColumn);
+stepThroughCell(1, 1);
