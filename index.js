@@ -91,9 +91,11 @@ const stepThroughCell = (row, column) => {
         // Destructuring
         const [nextRow, nextColumn] = neighbour;
         // - Check whether that neighbour is out of bounds
+        if (nextRow < 0 || nextRow >= cells || nextColumn < 0 || nextColumn >= cells) {
+            //   - row || column should not be < 0 || >= cells. if so skip
+            continue;
+        }
     }
-    // - Check whether that neighbour is out of bounds
-    //   - row or column cannot be less than 0 or greater than row or column.
     // - If neighbour had been visited, continue to next neighbour
     // - Remove the wall (horizontals or verticals, depends on direction of movement)
     // - Visit next cell (invoke stepThroughCell Fn with cell cordinates to visit)
