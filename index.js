@@ -76,20 +76,20 @@ const stepThroughCell = (row, column) => {
     //   r  ; CELL   |  home  | CELL
     // r + 1; cell  |  CELL   | cell
     const neighbours = shuffle([
-        // Above
-        [row - 1, column],
+        // Up
+        [row - 1, column, 'up'],
         // Left
-        [row, column - 1],
+        [row, column - 1, 'left'],
         // Right
-        [row, column + 1],
-        // Below
-        [row + 1, column]
+        [row, column + 1, 'right'],
+        // Down
+        [row + 1, column, 'down']
     ]);
     console.log('Neighbours:', neighbours);
     // For each neighbour...
     for (let neighbour of neighbours) {
         // Destructuring
-        const [nextRow, nextColumn] = neighbour;
+        const [nextRow, nextColumn, direction] = neighbour;
         // - Check whether that neighbour is out of bounds
         if (nextRow < 0 || nextRow >= cells || nextColumn < 0 || nextColumn >= cells) {
             //   - row || column should not be < 0 || >= cells. if so skip
@@ -99,8 +99,8 @@ const stepThroughCell = (row, column) => {
         if (grid[row][column]) {
             continue;
         }
+        // - Remove the wall (horizontals or verticals, depends on direction of movement)
     }
-    // - Remove the wall (horizontals or verticals, depends on direction of movement)
     // - Visit next cell (invoke stepThroughCell Fn with cell cordinates to visit)
 };
 // Invoke stepThroughCell Fn
