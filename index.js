@@ -68,7 +68,7 @@ const stepThroughCell = (row, column) => {
         // - If the cell was visited, the return
         return;
     }
-    // - Mark the cell as visited (true/false)
+    // - Mark the cell as visited (true)
     grid[row][column] = true;
     // Assemble randomly ordered list of neighbours
     //        c - 1   |    c    | c + 1
@@ -100,13 +100,25 @@ const stepThroughCell = (row, column) => {
             continue;
         }
         // - Remove the wall (horizontals or verticals, depends on direction of movement)
-        // Verticals walls management
+        // Verticals walls
+        //      c:0   c:1
+        // r:0 false false
+        // r:1 false false
+        // r:2 false false
+        // Horizontal walls
+        //   c:0   c:1  c:2
+        // r:0 false false false
+        // r:1 false false false
         if (direction === 'left') {
             verticals[row][column - 1] = true;
             console.log(verticals[row][column - 1]);
         } else if (direction === 'right') {
             verticals[row][column] = true;
             console.log(verticals[row][column]);
+        } else if (direction === 'up') {
+            horizontals[row - 1][column] = true;
+        } else if (direction === 'down') {
+            horizontals[row][column] = true;
         }
     }
     // - Visit next cell (invoke stepThroughCell Fn with cell cordinates to visit)
