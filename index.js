@@ -50,11 +50,7 @@ const grid = Array(cells).fill(null).map(() => (Array(cells).fill(false)));
 const verticals = Array(cells).fill(null).map(() => (Array(cells - 1).fill(false)));
 // Make Horizontals
 const horizontals = Array(cells - 1).fill(null).map(() => (Array(cells).fill(false)));
-// Testing
-console.log(grid);
-console.log(verticals);
-console.log(horizontals);
-// Starting Position
+// Starting Positions
 // Row
 const startRow = Math.floor(Math.random() * cells);
 // Column
@@ -63,6 +59,7 @@ const startColumn = Math.floor(Math.random() * cells);
 // console.log(startRow, startColumn);
 // Step through cell function, iterates through the cells
 const stepThroughCell = (row, column) => {
+    console.log(row, column);
     // Go to cell [row, column]
     if (grid[row][column]) {
         // - If the cell was visited, the return
@@ -85,18 +82,21 @@ const stepThroughCell = (row, column) => {
         // Down
         [row + 1, column, 'down']
     ]);
-    console.log('Neighbours:', neighbours);
+    // console.log('Neighbours:', neighbours);
     // For each neighbour...
     for (let neighbour of neighbours) {
         // Destructuring
         const [nextRow, nextColumn, direction] = neighbour;
+        console.log(nextRow, nextColumn, direction);
         // - Check whether that neighbour is out of bounds
         if (nextRow < 0 || nextRow >= cells || nextColumn < 0 || nextColumn >= cells) {
             //   - row || column should not be < 0 || >= cells. if so skip
+            // console.log('trigger 1');
             continue;
         }
         // - If neighbour had been visited, skip onto next neighbour
-        if (grid[row][column]) {
+        if (grid[nextRow][nextColumn]) {
+            // console.log('trigger 2');
             continue;
         }
         // - Remove the wall (horizontals or verticals, depends on direction of movement)
@@ -110,19 +110,26 @@ const stepThroughCell = (row, column) => {
         // r:0 false false false
         // r:1 false false false
         if (direction === 'left') {
+            // console.log('Sub trigger 1');
             verticals[row][column - 1] = true;
-            console.log(verticals[row][column - 1]);
         } else if (direction === 'right') {
+            // console.log('Sub trigger 2');
             verticals[row][column] = true;
-            console.log(verticals[row][column]);
         } else if (direction === 'up') {
+            // console.log('Sub trigger 3');
             horizontals[row - 1][column] = true;
         } else if (direction === 'down') {
+            // console.log('Sub trigger 4');
             horizontals[row][column] = true;
         }
+        // - Visit next cell (invoke stepThroughCell Fn with cell cordinates to visit)
+        stepThroughCell(nextRow, nextColumn);
     }
-    // - Visit next cell (invoke stepThroughCell Fn with cell cordinates to visit)
 };
 // Invoke stepThroughCell Fn
-// stepThroughCell(startRow, startColumn);
-stepThroughCell(1, 1);
+stepThroughCell(startRow, startColumn);
+// stepThroughCell(1, 1);
+// Testing
+console.log('Grid:', grid);
+console.log('Verticals:', verticals);
+console.log('Horizontals:', horizontals);
