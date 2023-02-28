@@ -100,6 +100,14 @@ const stepThroughCell = (row, column) => {
             continue;
         }
         // - Remove the wall (horizontals or verticals, depends on direction of movement)
+        // Verticals walls management
+        if (direction === 'left') {
+            verticals[row][column - 1] = true;
+            console.log(verticals[row][column - 1]);
+        } else if (direction === 'right') {
+            verticals[row][column] = true;
+            console.log(verticals[row][column]);
+        }
     }
     // - Visit next cell (invoke stepThroughCell Fn with cell cordinates to visit)
 };
