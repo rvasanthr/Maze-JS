@@ -2,14 +2,15 @@
 const { Engine, Render, Runner, World, Bodies } = Matter;
 // World custom dimensions
 //Square shape for now, to ease ogic implementation
-const width = 800;
-const height = 800;
+const width = 970;
+const height = 970;
+const mazeWallWidth = 1;
 // Cells count
-const cells = 10;
+const cells = 3;
 // Wall length
 const unitLength = width / cells;
 // Wall width
-const wallWidth = cells / 10;
+const innerWallWidth = 1;
 // Matter.js world creation
 const engine = Engine.create();
 const { world } = engine;
@@ -24,10 +25,10 @@ Runner.run(Runner.create(), engine);
 // The Wall, boundaries tied to world width and height respectively
 const walls = [
     // Bodies.rectangle(x, y, width, height); // Syntax
-    Bodies.rectangle(width / 2, 0, width, 40, { isStatic: true }),
-    Bodies.rectangle(width / 2, height, width, 40, { isStatic: true }),
-    Bodies.rectangle(0, height / 2, 40, height, { isStatic: true }),
-    Bodies.rectangle(width, height / 2, 40, height, { isStatic: true })
+    Bodies.rectangle(width / 2, 0, width, mazeWallWidth, { isStatic: true }),
+    Bodies.rectangle(width / 2, height, width, mazeWallWidth, { isStatic: true }),
+    Bodies.rectangle(0, height / 2, mazeWallWidth, height, { isStatic: true }),
+    Bodies.rectangle(width, height / 2, mazeWallWidth, height, { isStatic: true })
 ];
 // Adding objects to the world create
 World.add(world, walls);
@@ -149,7 +150,7 @@ horizontals.forEach((row, rowIndex) => {
             // If there is wall, build rectangle
             // Bodies.rectangle(x, y, width, height);
             const horizontalWall = Bodies.rectangle((columnIndex * unitLength + unitLength / 2),
-                (rowIndex * unitLength + unitLength), unitLength, wallWidth, { isStatic: true });
+                (rowIndex * unitLength + unitLength), unitLength, innerWallWidth, { isStatic: true });
             World.add(world, horizontalWall);
         }
     });
@@ -160,7 +161,7 @@ verticals.forEach((row, rowIndex) => {
         if (open) {
             return;
         } else {
-            const verticalWall = Bodies.rectangle((columnIndex * unitLength + unitLength), (rowIndex * unitLength + unitLength / 2), wallWidth, unitLength, { isStatic: true });
+            const verticalWall = Bodies.rectangle((columnIndex * unitLength + unitLength), (rowIndex * unitLength + unitLength / 2), innerWallWidth, unitLength, { isStatic: true });
             World.add(world, verticalWall);
         }
     });
