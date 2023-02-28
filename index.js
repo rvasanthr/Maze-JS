@@ -6,6 +6,8 @@ const width = 600;
 const height = 600;
 // Cells count
 const cells = 3;
+// Wall length
+const unitLength = width / cells;
 // Matter.js world creation
 const engine = Engine.create();
 const { world } = engine;
@@ -19,6 +21,7 @@ Runner.run(Runner.create(), engine);
 // Adding a bodies to the world
 // The Wall, boundaries tied to world width and height respectively
 const walls = [
+    // Bodies.rectangle(x, y, width, height); // Syntax
     Bodies.rectangle(width / 2, 0, width, 40, { isStatic: true }),
     Bodies.rectangle(width / 2, height, width, 40, { isStatic: true }),
     Bodies.rectangle(0, height / 2, 40, height, { isStatic: true }),
@@ -59,7 +62,7 @@ const startColumn = Math.floor(Math.random() * cells);
 // console.log(startRow, startColumn);
 // Step through cell function, iterates through the cells
 const stepThroughCell = (row, column) => {
-    console.log(row, column);
+    // console.log(row, column);
     // Go to cell [row, column]
     if (grid[row][column]) {
         // - If the cell was visited, the return
@@ -87,7 +90,7 @@ const stepThroughCell = (row, column) => {
     for (let neighbour of neighbours) {
         // Destructuring
         const [nextRow, nextColumn, direction] = neighbour;
-        console.log(nextRow, nextColumn, direction);
+        // console.log(nextRow, nextColumn, direction);
         // - Check whether that neighbour is out of bounds
         if (nextRow < 0 || nextRow >= cells || nextColumn < 0 || nextColumn >= cells) {
             //   - row || column should not be < 0 || >= cells. if so skip
@@ -133,3 +136,19 @@ stepThroughCell(startRow, startColumn);
 console.log('Grid:', grid);
 console.log('Verticals:', verticals);
 console.log('Horizontals:', horizontals);
+// Iterating over horizontals and verticals to create walls
+// Horizontals
+horizontals.forEach((row, rowIndex) => {
+    row.forEach((open, columnIndex) => {
+        if (open) {
+            // if there is no wall, return
+            return;
+        } else {
+            // If there is wall, build rectangle
+            // Bodies.rectangle(x, y, width, height);
+            const horizontalWall = Bodies.rectangle((columnIndex * unitLength + unitLength / 2),
+                (rowIndex * unitLength + unitLength), unitLength, 10, { isStatic: true });
+            World.add(world, horizontalWall);
+        }
+    });
+});
