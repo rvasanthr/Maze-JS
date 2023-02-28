@@ -2,12 +2,14 @@
 const { Engine, Render, Runner, World, Bodies } = Matter;
 // World custom dimensions
 //Square shape for now, to ease ogic implementation
-const width = 600;
-const height = 600;
+const width = 800;
+const height = 800;
 // Cells count
-const cells = 3;
+const cells = 10;
 // Wall length
 const unitLength = width / cells;
+// Wall width
+const wallWidth = cells / 10;
 // Matter.js world creation
 const engine = Engine.create();
 const { world } = engine;
@@ -147,7 +149,7 @@ horizontals.forEach((row, rowIndex) => {
             // If there is wall, build rectangle
             // Bodies.rectangle(x, y, width, height);
             const horizontalWall = Bodies.rectangle((columnIndex * unitLength + unitLength / 2),
-                (rowIndex * unitLength + unitLength), unitLength, 10, { isStatic: true });
+                (rowIndex * unitLength + unitLength), unitLength, wallWidth, { isStatic: true });
             World.add(world, horizontalWall);
         }
     });
@@ -158,7 +160,7 @@ verticals.forEach((row, rowIndex) => {
         if (open) {
             return;
         } else {
-            const verticalWall = Bodies.rectangle((columnIndex * unitLength + unitLength), (rowIndex * unitLength + unitLength / 2), 10, unitLength, { isStatic: true });
+            const verticalWall = Bodies.rectangle((columnIndex * unitLength + unitLength), (rowIndex * unitLength + unitLength / 2), wallWidth, unitLength, { isStatic: true });
             World.add(world, verticalWall);
         }
     });
