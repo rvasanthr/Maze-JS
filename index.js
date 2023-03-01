@@ -2,8 +2,10 @@
 const { Engine, Render, Runner, World, Bodies, Body, Events } = Matter;
 // World custom dimensions
 //Square shape for now, to ease ogic implementation
-const width = 970;
-const height = 970;
+// const width = 970;
+// const height = 970;
+const width = window.innerWidth;
+const height = window.innerHeight;
 const mazeWallWidth = 2;
 // Cells count
 const cells = 7;
