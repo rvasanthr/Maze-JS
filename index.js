@@ -4,7 +4,7 @@ const { Engine, Render, Runner, World, Bodies } = Matter;
 //Square shape for now, to ease ogic implementation
 const width = 970;
 const height = 970;
-const mazeWallWidth = 1;
+const mazeWallWidth = 2;
 // Cells count
 const cells = 3;
 // Inner Wall dimension control, length
@@ -32,11 +32,15 @@ const walls = [
 ];
 // Adding objects to the world created
 World.add(world, walls);
-// The goal object component
+// The GOAL object component
 const goal = Bodies.rectangle((width - unitLength / 2), (height - unitLength / 2),
     (unitLength * 0.8), (unitLength * 0.8), { isStatic: true });
 // Adding the goal to the Matter.js world
 World.add(world, goal);
+// BALL component
+const ball = Bodies.circle(unitLength / 2, unitLength / 2, unitLength / 2.7);
+// Adding ball to world
+World.add(world, ball);
 // MAZE GENERATOR
 // shuffler Fn to randomize grid neighbours
 const shuffle = (theArray) => {
