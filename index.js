@@ -12,7 +12,10 @@ const unitLength = width / cells;
 // Inner Wall dimension control, width
 const innerWallWidth = 1;
 // Matter.js world creation
+// Engine
 const engine = Engine.create();
+// Disabling gravity along y
+engine.world.gravity.y = 0;
 const { world } = engine;
 const render = Render.create({
     element: document.body,
@@ -46,7 +49,7 @@ document.addEventListener('keydown', event => {
     // Getting the velocity of the ball
     const { x, y } = ball.velocity;
     // console.log(x, y);
-    const accleration = 9;
+    const accleration = 2;
     // Move ball Up
     if (event.key === 'ArrowUp') {
         // Arrow Up, key = 'ArrowUp'
