@@ -8,8 +8,8 @@ const height = window.innerHeight - 4;
 const mazeWallWidth = 2.5;
 // Cells count
 // const cells = 7;
-const cellsHorizontal = 10;
-const cellsVertical = 7;
+const cellsHorizontal = 40;
+const cellsVertical = 22;
 // Inner Wall dimension control, new x, y
 // const unitLength = width / cells;
 const unitLengthX = width / cellsHorizontal;
@@ -227,9 +227,11 @@ Events.on(engine, 'collisionStart', event => {
         // console.log(collision);
         // Labels if ball and goal
         const labels = ['ball', 'goal'];
-        // Not sure if A or B is goal or ball, so
+        // Not sure if bodyA or bodyB is goal or ball, so
         if (labels.includes(collision.bodyA.label) && labels.includes(collision.bodyB.label)) {
             // console.log('You won!!!');
+            // Display message to user
+            document.querySelector('.winner').classList.remove('hidden');
             // Turning World gravity back on for dramatic Win Effect
             world.gravity.y = 1;
             // Using labes to identify inner walls and making them drop down
