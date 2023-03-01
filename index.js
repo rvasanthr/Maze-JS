@@ -1,12 +1,12 @@
 // Destructuring Matter
-const { Engine, Render, Runner, World, Bodies, Body } = Matter;
+const { Engine, Render, Runner, World, Bodies, Body, Events } = Matter;
 // World custom dimensions
 //Square shape for now, to ease ogic implementation
 const width = 970;
 const height = 970;
 const mazeWallWidth = 2;
 // Cells count
-const cells = 10;
+const cells = 3;
 // Inner Wall dimension control, length
 const unitLength = width / cells;
 // Inner Wall dimension control, width
@@ -37,11 +37,12 @@ const walls = [
 World.add(world, walls);
 // The GOAL object component
 const goal = Bodies.rectangle((width - unitLength / 2), (height - unitLength / 2),
-    (unitLength * 0.8), (unitLength * 0.8), { isStatic: true });
+    (unitLength * 0.8), (unitLength * 0.8), { label: 'goal', isStatic: true });
 // Adding the goal to the Matter.js world
 World.add(world, goal);
 // BALL component
-const ball = Bodies.circle(unitLength / 2, unitLength / 2, unitLength / 2.7);
+const ballRadius = unitLength / 3.7;
+const ball = Bodies.circle(unitLength / 2, unitLength / 2, ballRadius, { label: 'ball' });
 // Adding ball to world
 World.add(world, ball);
 // Event listener on the document to control ball
@@ -209,3 +210,19 @@ verticals.forEach((row, rowIndex) => {
         }
     });
 });
+// WIN Condition
+// collisionStart property monitors collision events between Matter objects
+// MatterJS uses single event object, so event pairs array gets wiped out when called
+Events.on(engine, 'collisionStart', event => {
+    // console.log(event);
+    // So, get collision from pairs, triggering forEach per pair
+    event.pairs.forEach(collision => {
+        // console.log(collision);
+        // Labels if ball and goal
+        const labels = ['ball', 'goal'];
+        // Not sure if A or B is goal or ball, so
+        if (labels.includes(collision.bodyA.label) && labels.includes(collision.bodyB.label)) {
+            console.log('You won!!!');
+        }
+    });
+})
