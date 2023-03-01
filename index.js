@@ -1,12 +1,12 @@
 // Destructuring Matter
-const { Engine, Render, Runner, World, Bodies } = Matter;
+const { Engine, Render, Runner, World, Bodies, Body } = Matter;
 // World custom dimensions
 //Square shape for now, to ease ogic implementation
 const width = 970;
 const height = 970;
 const mazeWallWidth = 2;
 // Cells count
-const cells = 3;
+const cells = 10;
 // Inner Wall dimension control, length
 const unitLength = width / cells;
 // Inner Wall dimension control, width
@@ -43,25 +43,33 @@ const ball = Bodies.circle(unitLength / 2, unitLength / 2, unitLength / 2.7);
 World.add(world, ball);
 // Event listener on the document to control ball
 document.addEventListener('keydown', event => {
+    // Getting the velocity of the ball
+    const { x, y } = ball.velocity;
+    // console.log(x, y);
+    const accleration = 9;
     // Move ball Up
     if (event.key === 'ArrowUp') {
         // Arrow Up, key = 'ArrowUp'
-        console.log('Move ball up');
+        // console.log('Move ball up');
+        Body.setVelocity(ball, { x, y: y - accleration });
     }
     // Move ball Down
     if (event.key === 'ArrowDown') {
         // Arrow Down, key = 'ArrowDown'
-        console.log('Move ball Down');
+        // console.log('Move ball Down');
+        Body.setVelocity(ball, { x, y: y + accleration });
     }
     // Move ball Left
     if (event.key === 'ArrowLeft') {
         // Arrow Left, key = 'ArrowLeft'
-        console.log('Move ball Left');
+        // console.log('Move ball Left');
+        Body.setVelocity(ball, { x: x - accleration, y });
     }
     // Move ball Right
     if (event.key === 'ArrowRight') {
         // Arrow Right, key = 'ArrowRight'
-        console.log('Move ball Right');
+        // console.log('Move ball Right');
+        Body.setVelocity(ball, { x: x + accleration, y });
     }
 });
 // MAZE GENERATOR
@@ -168,9 +176,9 @@ const stepThroughCell = (row, column) => {
 stepThroughCell(startRow, startColumn);
 // stepThroughCell(1, 1);
 // Testing
-console.log('Grid:', grid);
-console.log('Verticals:', verticals);
-console.log('Horizontals:', horizontals);
+// console.log('Grid:', grid);
+// console.log('Verticals:', verticals);
+// console.log('Horizontals:', horizontals);
 // Iterating over horizontals and verticals to create walls
 // Horizontals
 horizontals.forEach((row, rowIndex) => {
