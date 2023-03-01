@@ -1,16 +1,21 @@
 // Destructuring Matter
 const { Engine, Render, Runner, World, Bodies, Body, Events } = Matter;
 // World custom dimensions
-//Square shape for now, to ease ogic implementation
+// For SQUARE or RECTANGLE
+//Square shape for now, to ease logic implementation
 // const width = 970;
 // const height = 970;
 const width = window.innerWidth;
 const height = window.innerHeight;
 const mazeWallWidth = 2;
 // Cells count
-const cells = 7;
-// Inner Wall dimension control, length
-const unitLength = width / cells;
+// const cells = 7;
+const cellsHorizontal = 4;
+const cellsVertical = 3;
+// Inner Wall dimension control, new x, y
+// const unitLength = width / cells;
+const unitLengthX = width / cellsHorizontal;
+const unitLengthY = height / cellsVertical;
 // Inner Wall dimension control, width
 const innerWallWidth = 2;
 // Matter.js world creation
