@@ -25,7 +25,7 @@ const { world } = engine;
 const render = Render.create({
     element: document.body,
     engine: engine,
-    options: { width, height, wireframes: true },
+    options: { width, height, wireframes: false },
 });
 Render.run(render);
 Runner.run(Runner.create(), engine);
@@ -42,7 +42,7 @@ const walls = [
 World.add(world, walls);
 // The GOAL object component
 const goal = Bodies.rectangle((width - unitLengthX / 2), (height - unitLengthY / 2),
-    (unitLengthX * 0.8), (unitLengthY * 0.8), { label: 'goal', isStatic: true });
+    (unitLengthX * 0.8), (unitLengthY * 0.8), { label: 'goal', isStatic: true, render: { fillStyle: '#00b33c' } });
 // Adding the goal to the Matter.js world
 World.add(world, goal);
 // Bodies.circle(x, y, radius);
@@ -200,7 +200,7 @@ horizontals.forEach((row, rowIndex) => {
             // If there is wall, build rectangle
             // Bodies.rectangle(x, y, width, height);
             const horizontalWall = Bodies.rectangle((columnIndex * unitLengthX + unitLengthX / 2),
-                (rowIndex * unitLengthY + unitLengthY), unitLengthX, innerWallWidth, { label: 'wall', isStatic: true });
+                (rowIndex * unitLengthY + unitLengthY), unitLengthX, innerWallWidth, { label: 'wall', isStatic: true, render: { fillStyle: 'red' } });
             World.add(world, horizontalWall);
         }
     });
@@ -212,7 +212,7 @@ verticals.forEach((row, rowIndex) => {
             return;
         } else {
             // Bodies.rectangle(x, y, width, height);
-            const verticalWall = Bodies.rectangle((columnIndex * unitLengthX + unitLengthX), (rowIndex * unitLengthY + unitLengthY / 2), innerWallWidth, unitLengthY, { label: 'wall', isStatic: true });
+            const verticalWall = Bodies.rectangle((columnIndex * unitLengthX + unitLengthX), (rowIndex * unitLengthY + unitLengthY / 2), innerWallWidth, unitLengthY, { label: 'wall', isStatic: true, render: { fillStyle: 'red' } });
             World.add(world, verticalWall);
         }
     });
