@@ -6,11 +6,11 @@ const width = 970;
 const height = 970;
 const mazeWallWidth = 2;
 // Cells count
-const cells = 3;
+const cells = 7;
 // Inner Wall dimension control, length
 const unitLength = width / cells;
 // Inner Wall dimension control, width
-const innerWallWidth = 1;
+const innerWallWidth = 2;
 // Matter.js world creation
 // Engine
 const engine = Engine.create();
@@ -194,7 +194,7 @@ horizontals.forEach((row, rowIndex) => {
             // If there is wall, build rectangle
             // Bodies.rectangle(x, y, width, height);
             const horizontalWall = Bodies.rectangle((columnIndex * unitLength + unitLength / 2),
-                (rowIndex * unitLength + unitLength), unitLength, innerWallWidth, { isStatic: true });
+                (rowIndex * unitLength + unitLength), unitLength, innerWallWidth, { label: 'wall', isStatic: true });
             World.add(world, horizontalWall);
         }
     });
@@ -205,7 +205,7 @@ verticals.forEach((row, rowIndex) => {
         if (open) {
             return;
         } else {
-            const verticalWall = Bodies.rectangle((columnIndex * unitLength + unitLength), (rowIndex * unitLength + unitLength / 2), innerWallWidth, unitLength, { isStatic: true });
+            const verticalWall = Bodies.rectangle((columnIndex * unitLength + unitLength), (rowIndex * unitLength + unitLength / 2), innerWallWidth, unitLength, { label: 'wall', isStatic: true });
             World.add(world, verticalWall);
         }
     });
@@ -222,7 +222,15 @@ Events.on(engine, 'collisionStart', event => {
         const labels = ['ball', 'goal'];
         // Not sure if A or B is goal or ball, so
         if (labels.includes(collision.bodyA.label) && labels.includes(collision.bodyB.label)) {
-            console.log('You won!!!');
+            // console.log('You won!!!');
+            // Turning World gravity back on for dramatic Win Effect
+            world.gravity.y = 1;
+            // Using labes to identify inner walls and making them drop down
+            world.bodies.forEach(body => {
+                if (body.label === 'wall') {
+                    Body.setStatic(body, false);
+                }
+            });
         }
     });
-})
+});
