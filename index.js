@@ -41,6 +41,29 @@ World.add(world, goal);
 const ball = Bodies.circle(unitLength / 2, unitLength / 2, unitLength / 2.7);
 // Adding ball to world
 World.add(world, ball);
+// Event listener on the document to control ball
+document.addEventListener('keydown', event => {
+    // Move ball Up
+    if (event.key === 'ArrowUp') {
+        // Arrow Up, key = 'ArrowUp'
+        console.log('Move ball up');
+    }
+    // Move ball Down
+    if (event.key === 'ArrowDown') {
+        // Arrow Down, key = 'ArrowDown'
+        console.log('Move ball Down');
+    }
+    // Move ball Left
+    if (event.key === 'ArrowLeft') {
+        // Arrow Left, key = 'ArrowLeft'
+        console.log('Move ball Left');
+    }
+    // Move ball Right
+    if (event.key === 'ArrowRight') {
+        // Arrow Right, key = 'ArrowRight'
+        console.log('Move ball Right');
+    }
+});
 // MAZE GENERATOR
 // shuffler Fn to randomize grid neighbours
 const shuffle = (theArray) => {
