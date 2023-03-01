@@ -7,9 +7,9 @@ const height = 970;
 const mazeWallWidth = 1;
 // Cells count
 const cells = 3;
-// Wall length
+// Inner Wall dimension control, length
 const unitLength = width / cells;
-// Wall width
+// Inner Wall dimension control, width
 const innerWallWidth = 1;
 // Matter.js world creation
 const engine = Engine.create();
@@ -22,7 +22,7 @@ const render = Render.create({
 Render.run(render);
 Runner.run(Runner.create(), engine);
 // Adding a bodies to the world
-// The Wall, boundaries tied to world width and height respectively
+// The Maze Walls, boundaries tied to world width and height respectively
 const walls = [
     // Bodies.rectangle(x, y, width, height); // Syntax
     Bodies.rectangle(width / 2, 0, width, mazeWallWidth, { isStatic: true }),
@@ -32,6 +32,11 @@ const walls = [
 ];
 // Adding objects to the world created
 World.add(world, walls);
+// The goal object component
+const goal = Bodies.rectangle((width - unitLength / 2), (height - unitLength / 2),
+    (unitLength * 0.8), (unitLength * 0.8), { isStatic: true });
+// Adding the goal to the Matter.js world
+World.add(world, goal);
 // MAZE GENERATOR
 // shuffler Fn to randomize grid neighbours
 const shuffle = (theArray) => {
@@ -166,8 +171,3 @@ verticals.forEach((row, rowIndex) => {
         }
     });
 });
-// The goal object component
-const goal = Bodies.rectangle((width - unitLength / 2), (height - unitLength / 2),
-    (unitLength * 0.8), (unitLength * 0.8), { isStatic: true });
-// Adding the goal to the Matter.js world
-World.add(world, goal);
