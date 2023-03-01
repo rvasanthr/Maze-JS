@@ -3,21 +3,19 @@ const { Engine, Render, Runner, World, Bodies, Body, Events } = Matter;
 // World custom dimensions
 // For SQUARE or RECTANGLE
 //Square shape for now, to ease logic implementation
-// const width = 970;
-// const height = 970;
-const width = window.innerWidth;
-const height = window.innerHeight;
-const mazeWallWidth = 2;
+const width = window.innerWidth - 4;
+const height = window.innerHeight - 4;
+const mazeWallWidth = 2.5;
 // Cells count
 // const cells = 7;
-const cellsHorizontal = 4;
-const cellsVertical = 3;
+const cellsHorizontal = 10;
+const cellsVertical = 7;
 // Inner Wall dimension control, new x, y
 // const unitLength = width / cells;
 const unitLengthX = width / cellsHorizontal;
 const unitLengthY = height / cellsVertical;
 // Inner Wall dimension control, width
-const innerWallWidth = 2;
+const innerWallWidth = 3;
 // Matter.js world creation
 // Engine
 const engine = Engine.create();
@@ -43,13 +41,14 @@ const walls = [
 // Adding objects to the world created
 World.add(world, walls);
 // The GOAL object component
-const goal = Bodies.rectangle((width - unitLength / 2), (height - unitLength / 2),
-    (unitLength * 0.8), (unitLength * 0.8), { label: 'goal', isStatic: true });
+const goal = Bodies.rectangle((width - unitLengthX / 2), (height - unitLengthY / 2),
+    (unitLengthX * 0.8), (unitLengthY * 0.8), { label: 'goal', isStatic: true });
 // Adding the goal to the Matter.js world
 World.add(world, goal);
+// Bodies.circle(x, y, radius);
 // BALL component
-const ballRadius = unitLength / 3.7;
-const ball = Bodies.circle(unitLength / 2, unitLength / 2, ballRadius, { label: 'ball' });
+const ballRadius = Math.min(unitLengthX, unitLengthY) / 3.7;
+const ball = Bodies.circle(unitLengthX / 2, unitLengthY / 2, ballRadius, { label: 'ball' });
 // Adding ball to world
 World.add(world, ball);
 // Event listener on the document to control ball
@@ -102,16 +101,16 @@ const shuffle = (theArray) => {
     return theArray;
 }
 // Grid Maker
-const grid = Array(cells).fill(null).map(() => (Array(cells).fill(false)));
+const grid = Array(cellsVertical).fill(null).map(() => (Array(cellsHorizontal).fill(false)));
 // Make Verticals
-const verticals = Array(cells).fill(null).map(() => (Array(cells - 1).fill(false)));
+const verticals = Array(cellsVertical).fill(null).map(() => (Array(cellsHorizontal - 1).fill(false)));
 // Make Horizontals
-const horizontals = Array(cells - 1).fill(null).map(() => (Array(cells).fill(false)));
+const horizontals = Array(cellsVertical - 1).fill(null).map(() => (Array(cellsHorizontal).fill(false)));
 // Starting Positions
 // Row
-const startRow = Math.floor(Math.random() * cells);
+const startRow = Math.floor(Math.random() * cellsVertical);
 // Column
-const startColumn = Math.floor(Math.random() * cells);
+const startColumn = Math.floor(Math.random() * cellsHorizontal);
 // Testing
 // console.log(startRow, startColumn);
 // Step through cell function, iterates through the cells
@@ -146,7 +145,7 @@ const stepThroughCell = (row, column) => {
         const [nextRow, nextColumn, direction] = neighbour;
         // console.log(nextRow, nextColumn, direction);
         // - Check whether that neighbour is out of bounds
-        if (nextRow < 0 || nextRow >= cells || nextColumn < 0 || nextColumn >= cells) {
+        if (nextRow < 0 || nextRow >= cellsVertical || nextColumn < 0 || nextColumn >= cellsHorizontal) {
             //   - row || column should not be < 0 || >= cells. if so skip
             // console.log('trigger 1');
             continue;
@@ -200,8 +199,8 @@ horizontals.forEach((row, rowIndex) => {
         } else {
             // If there is wall, build rectangle
             // Bodies.rectangle(x, y, width, height);
-            const horizontalWall = Bodies.rectangle((columnIndex * unitLength + unitLength / 2),
-                (rowIndex * unitLength + unitLength), unitLength, innerWallWidth, { label: 'wall', isStatic: true });
+            const horizontalWall = Bodies.rectangle((columnIndex * unitLengthX + unitLengthX / 2),
+                (rowIndex * unitLengthY + unitLengthY), unitLengthX, innerWallWidth, { label: 'wall', isStatic: true });
             World.add(world, horizontalWall);
         }
     });
@@ -212,7 +211,8 @@ verticals.forEach((row, rowIndex) => {
         if (open) {
             return;
         } else {
-            const verticalWall = Bodies.rectangle((columnIndex * unitLength + unitLength), (rowIndex * unitLength + unitLength / 2), innerWallWidth, unitLength, { label: 'wall', isStatic: true });
+            // Bodies.rectangle(x, y, width, height);
+            const verticalWall = Bodies.rectangle((columnIndex * unitLengthX + unitLengthX), (rowIndex * unitLengthY + unitLengthY / 2), innerWallWidth, unitLengthY, { label: 'wall', isStatic: true });
             World.add(world, verticalWall);
         }
     });
