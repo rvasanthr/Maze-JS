@@ -168,6 +168,6 @@ verticals.forEach((row, rowIndex) => {
 });
 // The goal object component
 const goal = Bodies.rectangle((width - unitLength / 2), (height - unitLength / 2),
-    (unitLength * 0.93), (unitLength * 0.93), { isStatic: true });
+    (unitLength * 0.8), (unitLength * 0.8), { isStatic: true });
 // Adding the goal to the Matter.js world
 World.add(world, goal);
