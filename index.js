@@ -30,7 +30,7 @@ const walls = [
     Bodies.rectangle(0, height / 2, mazeWallWidth, height, { isStatic: true }),
     Bodies.rectangle(width, height / 2, mazeWallWidth, height, { isStatic: true })
 ];
-// Adding objects to the world create
+// Adding objects to the world created
 World.add(world, walls);
 // MAZE GENERATOR
 // shuffler Fn to randomize grid neighbours
@@ -166,3 +166,8 @@ verticals.forEach((row, rowIndex) => {
         }
     });
 });
+// The goal object component
+const goal = Bodies.rectangle((width - unitLength / 2), (height - unitLength / 2),
+    (unitLength * 0.93), (unitLength * 0.93), { isStatic: true });
+// Adding the goal to the Matter.js world
+World.add(world, goal);
